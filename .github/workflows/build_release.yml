@@ -28,13 +28,11 @@ jobs:
       run: ./gradlew lintKotlin shadowJar
 
     - name: Get Commit Count
-      if: ${{ github.event_name == 'push' }}
       id: commit_count
       run: echo "count=$(git rev-list --count HEAD)" >> $GITHUB_OUTPUT
 
     - name: Upload Release
       uses: softprops/action-gh-release@v2
-      if: ${{ github.event_name == 'push' }}
       with:
         tag_name:  ${{ steps.commit_count.outputs.count }}
         files: build/*.jar
